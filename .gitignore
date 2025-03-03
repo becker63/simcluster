@@ -1,0 +1,15 @@
+### Terraform ###
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Terraform modules managed by the shell, lock just gets in the way
+.terraform.lock.hcl
+
+machines/snode/image
+
+.direnv

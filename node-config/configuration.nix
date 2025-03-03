@@ -19,7 +19,7 @@ with lib;
       };
 
       users.users.root = {
-        password = "";  # Set an empty password for root
+        password = "jidw";  # Set an empty password for root
       };
 
   };

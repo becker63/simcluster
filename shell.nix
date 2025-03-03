@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { config.allowUnfree = true; } }:
 let
   make-boot-image = pkgs.writeShellScriptBin "make-boot-image" ''
-      nix-build -o sim/image '<nixpkgs/nixos>' -A config.system.build.qcow2 --arg configuration "{ imports = [ sim/config/build-qcow2.nix ]; }"
+      nix-build -o provision/sim/image '<nixpkgs/nixos>' -A config.system.build.qcow2 --arg configuration "{ imports = [ provision/sim/config/build-qcow2.nix ]; }"
   '';
   apiKey = builtins.getEnv "MY_API_KEY";
 in

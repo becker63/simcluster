@@ -14,7 +14,6 @@ with lib;
         settings = {
           PermitRootLogin = "yes";   # Allow root login with a password
           PasswordAuthentication = true;  # Allow password authentication
-          PermitEmptyPasswords = true;    # Allow login without a password
         };
       };
 

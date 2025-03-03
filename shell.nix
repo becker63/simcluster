@@ -12,9 +12,11 @@ pkgs.mkShell {
     jq
     terraform
     terraform-providers.libvirt
+    libxslt
 
 
     # scripts
     make-boot-image
   ];
+
 }

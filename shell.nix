@@ -1,27 +1,27 @@
 {
-  description = "A Nix Flake for building a bootable QCOW2 image";
+  pkgs ? import <nixpkgs> { config.allowUnfree = true; },
+}:
+let
+  #--eval-system aarch64-linux
+  make-boot-image = pkgs.writeShellScriptBin "make-boot-image" ''
+    nix-build nix-build --eval-system x86_64_linux -o provision/sim/image '<nixpkgs/nixos>' -A config.system.build.qcow2 --arg configuration "{ imports = [ provision/sim/config/build-qcow2.nix ]; }"
+  '';
+  apiKey = builtins.getEnv "MY_API_KEY";
+in
+pkgs.mkShell {
+  buildInputs = with pkgs; [
+    # software for deployment
+    colmena
+    jq
+    terraform
+    terraform-providers.libvirt
+    libxslt
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-  };
-
-  outputs = { self, nixpkgs }:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-  in {
-    # Define a NixOS configuration that builds a QCOW2 image
-    nixosConfigurations.qcow2Image = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [ ./provision/sim/config/build-qcow2.nix ];
-    };
-
-    # Expose the QCOW2 image as a flake package
-    packages.${system}.bootImage = pkgs.writeShellScriptBin "make-boot-image" ''
-      nix build .#nixosConfigurations.qcow2Image.config.system.build.qcow2Image
-      mkdir -p provision/sim/image
-      ln -sf result provision/sim/image
-      echo "Boot image built at provision/sim/image"
-    '';
-  };
+    # scripts
+    make-boot-image
+  ];
+  shellHook = ''
+    export MY_API_KEY="${apiKey}"
+    zsh
+  '';
 }

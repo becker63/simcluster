@@ -1,3 +1,4 @@
+# This is what all k3s nodes should look like
 { pkgs, lib, ... }:
 
 with lib;

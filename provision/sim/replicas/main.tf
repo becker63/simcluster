@@ -27,6 +27,7 @@ resource "libvirt_domain" "node" {
 
   network_interface {
     network_id     = var.network_id
+    addresses  = [var.replica_ips[count.index]]
     wait_for_lease = true
   }
 }

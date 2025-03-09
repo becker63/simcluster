@@ -3,6 +3,10 @@ variable "replica_count" {
   description = "Number of replicas to create"
 }
 
+variable "replica_ips" {
+  type    = list(string)
+}
+
 variable "volume_id" {
   type        = string
   description = "Base volume ID to clone for each node"

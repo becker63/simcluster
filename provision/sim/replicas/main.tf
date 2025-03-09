@@ -30,4 +30,9 @@ resource "libvirt_domain" "node" {
     addresses  = [var.replica_ips[count.index]]
     wait_for_lease = true
   }
+  console {
+    type = "pty"
+    target_type = "serial"
+    target_port = "0"
+  }
 }

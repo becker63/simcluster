@@ -1,9 +1,12 @@
 {
   description = "packages and build scripts";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/24.11";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/24.11";
+    disko.url = "github:nix-community/disko";
+  };
 
-  outputs = { self, nixpkgs, ... }:
+  outputs = { self, nixpkgs, disko, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -11,15 +14,16 @@
       config.allowUnfree = true;
     };
 
-    # Import the shell apps from separate files
-    buildImageApp = import ./apps/build-image.nix { inherit pkgs; };
-    buildISOApp   = import ./apps/build-iso.nix   { inherit pkgs; };
+    buildImageApp = import ./scripts/build-image.nix { inherit pkgs; };
+    buildISOApp   = import ./scripts/build-iso.nix   { inherit pkgs; };
   in {
     nixosConfigurations = {
       build-qcow2 = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./configurations/hardware/sim
+          disko.nixosModules.disko
+          ./configurations/hardware/disko
           ./configurations/node
         ];
       };
@@ -37,19 +41,18 @@
     };
 
     devShells.${system}.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            terraform
-            terraform-providers.libvirt
-            libxslt
-            qemu
-          ];
+      buildInputs = with pkgs; [
+        terraform
+        terraform-providers.libvirt
+        libxslt
+        qemu
+        tree
+      ];
 
-          shellHook = ''
-              # https://discourse.nixos.org/t/nix-shell-does-not-use-my-users-shell-zsh/5588/13
-              # https://ianthehenry.com/posts/how-to-learn-nix/nix-zshell/
-              # tldr idc just start it on top of bash
-              zsh
-          '';
-        };
+      shellHook = ''
+        # Starting zsh on top of bash for a consistent shell experience
+        zsh
+      '';
+    };
   };
 }

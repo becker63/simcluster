@@ -1,6 +1,4 @@
-{ lib, ... }:
 {
-  config = {
     disko.devices = {
       disk = {
         main = {
@@ -80,7 +78,4 @@
         };
       };
     };
-
-    fileSystems."/persist".neededForBoot = true;
-  };
-}
+  }

@@ -18,6 +18,21 @@
         "type": "github"
       }
     },
+    "disko-images": {
+      "locked": {
+        "lastModified": 1741575839,
+        "narHash": "sha256-FxRg412z+N7aZvzvSzqkdmnnUxWoL5vrpnS7aCU/aes=",
+        "owner": "becker63",
+        "repo": "disko-images",
+        "rev": "a65b9ab47b0e3834524cebb972a1c7185d4ef941",
+        "type": "github"
+      },
+      "original": {
+        "owner": "becker63",
+        "repo": "disko-images",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1738136902,
@@ -53,6 +68,7 @@
     "root": {
       "inputs": {
         "disko": "disko",
+        "disko-images": "disko-images",
         "nixpkgs": "nixpkgs_2"
       }
     }

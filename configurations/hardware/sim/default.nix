@@ -2,6 +2,10 @@
 {
   networking.hostId = "4e98920d";
 
+  boot.kernelParams = [ "console=ttyS0" ];
+  systemd.services."getty@ttyS0".enable = true;
+
+
   boot.initrd.supportedFilesystems = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.package = pkgs.zfs_unstable;

@@ -1,6 +1,7 @@
 { lib, pkgs, config, modulesPath, ... }:
 {
   networking.hostId = "4e98920d";
+  pkgs.disko.devices.disk.main.imageSize = "10G";
 
   boot.kernelParams = [ "console=ttyS0" ];
   systemd.services."getty@ttyS0".enable = true;

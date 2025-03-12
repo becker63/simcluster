@@ -34,15 +34,6 @@
             disko.nixosModules.disko
             ./configurations/hardware/disko
             ./configurations/node
-            disko.nixosModules.disko
-            (
-              { config, ... }:
-              {
-                # Adjust this to your liking.
-                # WARNING: if you set a too low value the image might be not big enough to contain the nixos installation
-                disko.devices.disk.main.imageSize = "10G";
-              }
-            )
           ];
         };
 
@@ -60,10 +51,12 @@
 
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          nix-output-monitor
           terraform
           terraform-providers.libvirt
           libxslt
           qemu
+          libvirt
           tree
         ];
 

@@ -23,9 +23,9 @@ resource "libvirt_network" "k3s" {
 }
 
 resource "libvirt_volume" "nixos_boot" {
-  name   = "nixos_boot.qcow2"
+  name   = "nixos_boot"
   pool   = "default"
-  source = "image/nixos.qcow2"
+  source = "image.qcow2"
   format = "qcow2"
 }
 

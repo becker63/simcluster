@@ -1,7 +1,7 @@
 { lib, pkgs, config, modulesPath, ... }:
 {
   networking.hostId = "4e98920d";
-  pkgs.disko.devices.disk.main.imageSize = "10G";
+  disko.devices.disk.main.imageSize = "10G";
 
   boot.kernelParams = [ "console=ttyS0" ];
   systemd.services."getty@ttyS0".enable = true;
@@ -28,15 +28,14 @@
 
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.devices = [ "nodev" ];
+  boot.loader.grub.efiSupport = false;
+  boot.loader.grub.devices = [ "/dev/sda" ];
 
   system.build.qcow2 = import "${modulesPath}/../lib/make-disk-image.nix" {
     inherit lib config pkgs;
     diskSize = "8192";
     format = "qcow2";
-    partitionTableType = "efi";
+    partitionTableType = "mbr";
   };
 
 }

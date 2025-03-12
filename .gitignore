@@ -11,7 +11,11 @@
 # Terraform modules managed by the shell, lock just gets in the way
 .terraform.lock.hcl
 
-provision/sim/image
 provision/physical/iso
 
 .direnv
+
+# Qcow image builder artifacts we dont care about
+result
+main.raw
+provision/sim/image.qcow2

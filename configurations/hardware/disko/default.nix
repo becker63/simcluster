@@ -1,5 +1,5 @@
 {
-    disko.devices = {
+  disko.devices = {
       disk = {
         main = {
           type = "disk";
@@ -7,6 +7,11 @@
           content = {
             type = "gpt";
             partitions = {
+              biosBoot = {
+                size = "2M";
+                type = "EF02";
+                # no filesystem content needed
+              };
               ESP = {
                 size = "1G";
                 type = "EF00";
